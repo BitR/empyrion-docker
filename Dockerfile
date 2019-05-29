@@ -17,7 +17,8 @@ ENV HOME /home/user
 WORKDIR /home/user
 VOLUME /home/user/Steam
 
-RUN curl -sqL "https://steamcdn-a.akamaihd.net/client/installer/steamcmd_linux.tar.gz" | tar xz
+RUN curl -sqL "https://steamcdn-a.akamaihd.net/client/installer/steamcmd_linux.tar.gz" | tar xz && \
+    ./steamcmd.sh +login anonymous +quit
 
 EXPOSE 30000/udp
 ADD entrypoint.sh /

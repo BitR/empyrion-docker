@@ -7,6 +7,7 @@ cd "$HOME"
 [ -z "$BETA" ] && ./steamcmd.sh +login anonymous +app_update 530870 +quit
 mkdir -p "$GAMEDIR/Logs"
 
+rm -f /tmp/.X1-lock
 Xvfb :1 -screen 0 800x600x24 &
 export WINEDLLOVERRIDES="mscoree,mshtml="
 export DISPLAY=:1

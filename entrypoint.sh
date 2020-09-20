@@ -11,8 +11,8 @@ GAMEDIR="$HOME/Steam/steamapps/common/Empyrion - Dedicated Server/DedicatedServe
 
 cd "$HOME"
 set +e
-[ "$BETA" ] && ./steamcmd.sh +login anonymous +app_update 530870 -beta experimental +quit
-[ -z "$BETA" ] && ./steamcmd.sh +login anonymous +app_update 530870 +quit
+[ "$BETA" ] && ./steamcmd.sh +@sSteamCmdForcePlatformType windows +login anonymous +app_update 530870 -beta experimental +quit
+[ -z "$BETA" ] && ./steamcmd.sh +@sSteamCmdForcePlatformType windows +login anonymous +app_update 530870 +quit
 set -e
 mkdir -p "$GAMEDIR/Logs"
 

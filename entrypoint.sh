@@ -8,6 +8,8 @@
 } || :
 
 GAMEDIR="$HOME/Steam/steamapps/common/Empyrion - Dedicated Server/DedicatedServer"
+SCENARIODIR="$HOME/Steam/steamapps/common/Empyrion - Dedicated Server/Content/Scenarios"
+MODSDIR="$HOME/Steam/steamapps/workshop/content/383120"
 
 cd "$HOME"
 set +e
@@ -15,6 +17,9 @@ set +e
 [ -z "$BETA" ] && ./steamcmd.sh +@sSteamCmdForcePlatformType windows +login anonymous +"workshop_download_item 383120 2550354956" +app_update 530870 +quit
 set -e
 mkdir -p "$GAMEDIR/Logs"
+
+cp "$MODSDIR/2550354956" "$SCENARIODIR/ReforgedEden" -R
+chown ubuntu:ubuntu -R "$SCENARIODIR/ReforgedEden"
 
 rm -f /tmp/.X1-lock
 Xvfb :1 -screen 0 800x600x24 &

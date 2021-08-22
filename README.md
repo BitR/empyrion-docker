@@ -24,4 +24,6 @@ The DedicatedServer folder has been symlinked to /server, so that you can refer 
 docker run -di -p 30000:30000/udp --restart unless-stopped -v $PWD/gamedir:/home/user/Steam bitr/empyrion-server -dedicated 'z:/server/Saves/Games/The_Game/dedicated.yaml'
 ```
 
+To append arguments to the steamcmd command, use `-e "STEAMCMD=..."`. Example: `-e "STEAMCMD=+runscript /home/user/Steam/addmods.txt"`.
+
 For more information about the dedicated server itself, refer to the [wiki](https://empyrion.gamepedia.com/Dedicated_Server_Setup).

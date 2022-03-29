@@ -18,7 +18,7 @@ set +e
 set -e
 mkdir -p "$GAMEDIR/Logs"
 
-cp "$MODSDIR/2550354956" "$SCENARIODIR/ReforgedEden" -R
+cp "$MODSDIR/2550354956/*" "$SCENARIODIR/ReforgedEden" -R
 
 rm -f /tmp/.X1-lock
 Xvfb :1 -screen 0 800x600x24 &

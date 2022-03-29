@@ -19,7 +19,6 @@ set -e
 mkdir -p "$GAMEDIR/Logs"
 
 cp "$MODSDIR/2550354956" "$SCENARIODIR/ReforgedEden" -R
-chown ubuntu:ubuntu -R "$SCENARIODIR/ReforgedEden"
 
 rm -f /tmp/.X1-lock
 Xvfb :1 -screen 0 800x600x24 &
@@ -33,4 +32,4 @@ cd "$GAMEDIR"
 sh -c 'until [ "`netstat -ntl | tail -n+3`" ]; do sleep 1; done
 sleep 5 # gotta wait for it to open a logfile
 tail -F Logs/current.log ../Logs/*/*.log 2>/dev/null' &
-/opt/wine-staging/bin/wine ./EmpyrionDedicated.exe -batchmode -nographics -dedicated MyDedicatedConfig.yaml -logFile Logs/current.log "$@" &> Logs/wine.log
+/opt/wine-staging/bin/wine ./EmpyrionDedicated.exe -batchmode -nographics -logFile Logs/current.log "$@" &> Logs/wine.log

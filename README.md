@@ -27,3 +27,6 @@ docker run -di -p 30000:30000/udp --restart unless-stopped -v $PWD/gamedir:/home
 To append arguments to the steamcmd command, use `-e "STEAMCMD=..."`. Example: `-e "STEAMCMD=+runscript /home/user/Steam/addmods.txt"`.
 
 For more information about the dedicated server itself, refer to the [wiki](https://empyrion.gamepedia.com/Dedicated_Server_Setup).
+
+## Custom Scenarios (such as Reforged Eden)
+- run `chown 1000:1000 /path/to/scenario -R` otherwise server won't start due to lack of permissions on the scenario directory

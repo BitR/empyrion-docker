@@ -6,12 +6,16 @@ The image itself contains WINE and steamcmd, along with an entrypoint.sh script 
 When running the image, mount the volume /home/user/Steam, to persist the Empyrion install and avoid downloading it on each container start.
 Sample invocation:
 ```
+cd empyrion-docker
+docker build -t empyrion-dedicated-server .
 mkdir -p gamedir
-docker run -di -p 30000:30000/udp --restart unless-stopped -v $PWD/gamedir:/home/user/Steam bitr/empyrion-server
+docker run -di -p 30000:30000/udp --restart unless-stopped -v $PWD/gamedir:/home/user/Steam empyrion-dedicated-server
 
 # for experimental version:
+cd empyrion-docker
+docker build -t empyrion-dedicated-server .
 mkdir -p gamedir_beta
-docker run -di -p 30000:30000/udp --restart unless-stopped -v $PWD/gamedir_beta:/home/user/Steam -e BETA=1 bitr/empyrion-server
+docker run -di -p 30000:30000/udp --restart unless-stopped -v $PWD/gamedir_beta:/home/user/Steam -e BETA=1 empyrion-dedicated-server
 ```
 
 After starting the server, you can edit the dedicated.yaml file at 'gamedir/steamapps/common/Empyrion - Dedicated Server/dedicated.yaml'.

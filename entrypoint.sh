@@ -1,20 +1,12 @@
 #!/bin/bash -ex
 
-[ "$UID" != 0 ] || {
-    mkdir -p ~user/Steam
-    chown user: ~user/Steam
-    runuser -u user "$0" "$@"
-    exit 0
-}
-
 GAMEDIR="$HOME/Steam/steamapps/common/Empyrion - Dedicated Server/DedicatedServer"
 
-cd "$HOME"
-STEAMCMD="./steamcmd.sh +@sSteamCmdForcePlatformType windows +login anonymous $STEAMCMD"
-[ -z "$BETA" ] || STEAMCMD="$STEAMCMD -beta experimental"
+: ${STEAMCMD}
+BETACMD=
+[ -z "$BETA" ] || BETACMD="-beta experimental"
 
-# eval to support quotes in $STEAMCMD
-eval "$STEAMCMD +app_update 530870 +quit"
+./steamcmd.sh +@sSteamCmdForcePlatformType windows +login anonymous +app_update 530870 $BETACMD $STEAMCMD +quit
 
 mkdir -p "$GAMEDIR/Logs"
 

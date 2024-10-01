@@ -1,29 +1,51 @@
 # empyrion-server
 **Docker image for the [Empyrion](https://empyriongame.com/) dedicated server using WINE**
 
-The image itself contains WINE and steamcmd, along with an entrypoint.sh script that bootstraps the Empyrion dedicated server install via steamcmd.
+This Docker image includes WINE and steamcmd, along with an entrypoint script that bootstraps the Empyrion dedicated server installation via steamcmd.
 
-When running the image, mount the volume /home/user/Steam, to persist the Empyrion install and avoid downloading it on each container start.
-Sample invocation:
+## Breaking changes
+The entrypoint no longer `chown`'s the Steam directory, so make sure to run the container as a user with appropriate permissions.
+
+## Usage
+
+### Basic setup
+1. Create a directory for your game data:
+    ```sh
+    mkdir -p gamedir
+    ```
+2. Run the Docker container:
+    ```sh
+    docker run -d -p 30000:30000/udp --restart unless-stopped -v $PWD/gamedir:/home/user/Steam bitr/empyrion-server
+    ```
+
+### Running the experimental version
+1. Create a directory for your beta game data:
+    ```sh
+    mkdir -p gamedir_beta
+    ```
+2. Run the Docker container with the `BETA` environment variable set to 1:
+    ```sh
+    docker run -di -p 30000:30000/udp --restart unless-stopped -v $PWD/gamedir_beta:/home/user/Steam -e BETA=1 bitr/empyrion-server
+    ```
+
+## Permission errors
+If you're getting permission errors, it's because the folder you mounted in with `-v` didn't already exist and is now created and owned by **root:root**. You need to `chown` the volume mount to **1000:1000** (unless you've specified otherwise when you ran the `docker` command)
+
+## Configuration
+After starting the server, you can edit the **dedicated.yaml** file located at **gamedir/steamapps/common/Empyrion - Dedicated Server/dedicated.yaml**. You will need to restart the Docker container after making changes.
+
+The **DedicatedServer** folder is symlinked to **/server**, allowing you to refer to saves with **z:/server/Saves**. For example, for a save called **The_Game**:
+```sh
+# Run the container with the specific save
+docker run -d -p 30000:30000/udp --restart unless-stopped -v $PWD/gamedir:/home/user/Steam bitr/empyrion-server -- -dedicated 'z:/server/Saves/Games/The_Game/dedicated.yaml'
 ```
-mkdir -p gamedir
-docker run -di -p 30000:30000/udp --restart unless-stopped -v $PWD/gamedir:/home/user/Steam bitr/empyrion-server
 
-# for experimental version:
-mkdir -p gamedir_beta
-docker run -di -p 30000:30000/udp --restart unless-stopped -v $PWD/gamedir_beta:/home/user/Steam -e BETA=1 bitr/empyrion-server
+## Advanced Usage
+To append arguments to the `steamcmd` command, use the `STEAMCMD` environment variable. For example:
+```sh
+-e "STEAMCMD=+runscript /home/user/Steam/addmods.txt"
 ```
 
-After starting the server, you can edit the dedicated.yaml file at 'gamedir/steamapps/common/Empyrion - Dedicated Server/dedicated.yaml'.
-You'll need to restart the docker container after editing.
+## Additional Information
+For more information about setting up the Empyrion dedicated server, refer to the [wiki](https://empyrion.gamepedia.com/Dedicated_Server_Setup).
 
-The DedicatedServer folder has been symlinked to /server, so that you can refer to saves with z:/server/Saves (for instance the save called The\_Game):
-```
-# cp -r /..../Saves/Games/The_Game 'gamedir/steamapps/common/Empyrion - Dedicated Server/Saves/Games/'
-# you might want a symlink for games: ln -s 'gamedir/steamapps/common/Empyrion - Dedicated Server/Saves/Games'
-docker run -di -p 30000:30000/udp --restart unless-stopped -v $PWD/gamedir:/home/user/Steam bitr/empyrion-server -dedicated 'z:/server/Saves/Games/The_Game/dedicated.yaml'
-```
-
-To append arguments to the steamcmd command, use `-e "STEAMCMD=..."`. Example: `-e "STEAMCMD=+runscript /home/user/Steam/addmods.txt"`.
-
-For more information about the dedicated server itself, refer to the [wiki](https://empyrion.gamepedia.com/Dedicated_Server_Setup).

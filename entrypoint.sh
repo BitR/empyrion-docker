@@ -1,25 +1,16 @@
-#!/bin/bash -ex
+#!/bin/bash
 
-GAMEDIR="$HOME/Steam/steamapps/common/Empyrion - Dedicated Server/DedicatedServer"
-
-: ${STEAMCMD}
-BETACMD=
-[ -z "$BETA" ] || BETACMD="-beta experimental"
-
-./steamcmd.sh +@sSteamCmdForcePlatformType windows +login anonymous +app_update 530870 $BETACMD $STEAMCMD +quit
-
-mkdir -p "$GAMEDIR/Logs"
-
+cd ~
+if [ ! -d empyrion ]; then
+steamcmd/steamcmd.sh +force_install_dir ~/empyrion +login anonymous +app_update 530870 +quit &> steamlog
+fi
+if [ -z "$(ps -e | grep 'sshd')" ]; then
+.ssh/sshd.sh > /dev/null
+fi
 rm -f /tmp/.X1-lock
-Xvfb :1 -screen 0 800x600x24 &
-export WINEDLLOVERRIDES="mscoree,mshtml="
+if [ -z "$(ps -e | grep 'Xvfb')" ]; then
+Xvfb :1 -screen 0 1x1x8 &> /home/user/xlog &
+fi
 export DISPLAY=:1
-
-cd "$GAMEDIR"
-
-[ "$1" = "bash" ] && exec "$@"
-
-sh -c 'until [ "`netstat -ntl | tail -n+3`" ]; do sleep 1; done
-sleep 5 # gotta wait for it to open a logfile
-tail -F Logs/current.log ../Logs/*/*.log 2>/dev/null' &
-/opt/wine-staging/bin/wine ./EmpyrionDedicated.exe -batchmode -nographics -logFile Logs/current.log "$@" &> Logs/wine.log
+cd ~/empyrion/DedicatedServer
+wine EmpyrionDedicated.exe -batchmode -nographics -logFile /home/user/emplog -dedicated /home/user/conf.yaml &> /home/user/winlog

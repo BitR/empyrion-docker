@@ -1,0 +1,110 @@
+### Dedicated server settings
+### To use your own dedicated.yaml (e.g., "MyDedicatedConfig.yaml"), add "-dedicated MyDedicatedConfig.yaml" to the corresponding batch file
+
+ServerConfig:
+    Srv_Port: 30000
+    Srv_Name: My Server
+    # Srv_Password: Abc # Only use with public servers (not for Local Coop)
+    # Srv_MaxPlayers: 8
+
+    # Idle playfield servers held in reserve. For busy public servers, we recommend at least 2 (default = 1)
+    # Valid range: 0..10
+    # Srv_ReservePlayfields: 1
+
+    ### Server description shown in Server Browser
+    ### max 127 chars: "-------------------------------------------------------------------------------------------------------------------------------"
+    # Srv_Description: "Server info, can contain [b]bold[/b] text or a [u][url=empyriongame.com]link[/url][/u]."
+
+    ### Set the following parameter to false (or comment the line out) if you want to hide your server in the Server Browser 
+    ### If server is not visible you can connect via IP or via joining a friend's game.
+    Srv_Public: true
+
+    ### All playfield servers will be automatically stopped every <n> real time hours. Players will get some warning messages before
+    # Srv_StopPeriod: 48
+
+    ### Activate Telnet server
+    # Tel_Enabled: true   
+    # Tel_Port: 30004
+    # Tel_Pwd: Abc
+
+    ### Activate Easy Anti Cheat (clients have to enable EAC via Options -> Misc to connect to a EAC protected server)
+    EACActive: true
+
+    ### Location of save game folder    
+    # SaveDirectory: Saves
+
+    ### Restrict allowed Blueprint size class: restricted types are not allowed to be produced or spawned
+    # 1 = allow only small blueprints, ... , 10 = allow very large blueprints, ..., 50 = allow gigantic blueprints, ... , 0 = no limits
+    ### Warning: large blueprints can have very strong performance impact!
+    MaxAllowedSizeClass: 10
+
+    ### Restrict Blueprint types allowed for production in factory
+    ### None      = Blueprint system completely disabled
+    ### StockOnly = only stock blueprints can be produced
+    ### All       = all types allowed (default)
+    AllowedBlueprints: All
+
+    ### Timeout in seconds after which a playfield server process will be killed (and all players on it disconnected) if it does no longer send heartbeat messages to the dedi 
+    ### Set 0 to disable this feature
+    HeartbeatServer: 15
+
+    ### Timeout in seconds after which a client will be disconnected if it does no longer send heartbeat messages to the dedi
+    ### Set 0 to disable this feature
+    # HeartbeatClient: 30
+
+    ### Enable extra log outputs (for debugging purposes)
+    ### Defined flags: (add together the values if more than one group should be active at the same time)
+    ### 0 = no extra logs
+    ### 1 = EAC
+    ### 2 = EAC_all_details (includes EAC - Note: this generates a lot of log lines)
+    # LogFlags: 0
+
+    ### Uncomment the following line if you want to prohibit Steam Family Sharers playing (only the game owner can then play)
+    # DisableSteamFamilySharing: True
+
+    ### Players with a ping higher than the value specified below will be locked out of the game. We recommend to not allow too high pings as this can result in player cheating
+    # KickPlayerWithPing: 300
+
+    ### Monitors booting playfield server processes, kills them if they time out (time in seconds, 0 = disabled)
+    ### Note: This is a conservative default, for faster servers 60 seconds should be ok
+    TimeoutBootingPfServer: 90
+    
+    ### If specified, the number of parallel logins to a server are restricted to this number. This is important when you expect a big number of people to login at the same time
+    # PlayerLoginParallelCount: 5
+    ### Add steam ids for preferred players that will get a better position in the login queue
+    # PlayerLoginVipNames: "123456789,123456788,123456787"
+
+    ### Enable if hosted scenario should use DLC features - NOTE: all players that want to join the server need to own the DLC
+    # EnableDLC: true
+
+
+GameConfig:
+    GameName: DediGame                       # Determines name of the save game 
+    Mode: Survival                           # Survival or Creative
+    Seed: 1011345                            # The seed determines how the world is procedurally generated - the same seed means the same world
+    CustomScenario: Default Multiplayer      # Enable custom scenario. Name of custom scenario from folder Content\Scenarios
+
+    # SharedData transfer via cloud storage
+    # Since the in-game transfer is slow and costs a lot of dedi server bandwidth, you can now use a cloud storage service.
+    #
+    # How to use:
+    # - zip the complete SharedData folder of the hosted scenario and upload the zip file to a cloud service
+    #   - side note: the name of the zip file doesn't matter, you can use the scenario name or add date or version info if you like
+    # - ! enable sharing for the uploaded file so that everyone with a sharing link can download it !
+    # - create the sharing link for the zip file and set it below as SharedDataURL parameter
+    #   - Note: when that parameter exists, the old in-game transfer is disabled
+    #
+    # Notes:
+    # - usually the link URL from the cloud service is a "view URL" => when you paste it into your browser a page opens with a Download button somewhere
+    # - since we need to directly download the file, we internally convert the "view URL" into a "download URL"
+    # - this currently works for "Google Drive", "OneDrive" (Personal variant) and DropBox
+    # - if you want to use another service, you need to get a "download URL" yourself
+    #   - also set that as SharedDataURL parameter but prefix it with an underscore '_' to mark it as such
+
+    # !!! Please DON'T FORGET to update the URL when you upload a new version of your zip file !!!
+
+    # Google Drive example
+    # SharedDataURL: https://drive.google.com/file/d/1xxxxxxxxxxK/view?usp=sharing
+
+    # Example for a "download URL" - notice the leading underscore character
+    # SharedDataURL: _https://anotherservice.com/abc123

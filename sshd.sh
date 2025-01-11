@@ -1,4 +1,4 @@
 #!/bin/sh
 
-ssh-keygen -N '' -f ~/.ssh/key
-/usr/sbin/sshd -h ~/.ssh/key
+ssh-keygen -N '' -f ~/.ssh/key > ~/logssh
+/usr/sbin/sshd -Dh ~/.ssh/key >> ~/logssh

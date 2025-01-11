@@ -5,4 +5,6 @@ docker run -d \
  -p 30004:22/tcp \
  -p 30000-30004:30000-30004/udp \
  --name empyrion empyrion \
- tail -f /dev/null
+ sh -c 'tail -f /dev/null'
+
+docker exec -d .ssh/sshd.sh

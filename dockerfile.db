@@ -30,6 +30,6 @@ COPY --chown=user:user ["entrypoint.sh","tel.sh","conf.yaml","./"]
 
 RUN echo "empyrion built from debian:12.8-slim on $(date +%Y%m%d)" >> /info.txt
 USER user:user
-EXPOSE 30000-30004/tcp
-EXPOSE 30000-30004/udp
-CMD tail -f /dev/null
+EXPOSE 22/tcp \
+ 30000-30003/tcp \
+ 30000-30004/udp

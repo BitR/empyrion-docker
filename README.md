@@ -43,8 +43,16 @@ docker run -d -p 30000:30000/udp --restart unless-stopped -v $PWD/gamedir:/home/
 ## Advanced Usage
 To append arguments to the `steamcmd` command, use the `STEAMCMD` environment variable. For example:
 ```sh
--e "STEAMCMD=+runscript /home/user/Steam/addmods.txt"
+-e "STEAMCMD=+runscript /home/user/Steam/add_scenario.txt"
 ```
+
+So to add a scenario, you'd add the following to `$PWD/gamedir/add_scenario.txt`:
+
+```
+workshop_download_item 383120 <workshop_id>
+```
+
+Look for multiplayer scenarios at https://steamcommunity.com/workshop/browse?appid=383120 and use the workshop id (available in the browser url when configuring which scenario to add)
 
 ## Additional Information
 For more information about setting up the Empyrion dedicated server, refer to the [wiki](https://empyrion.gamepedia.com/Dedicated_Server_Setup).

@@ -11,11 +11,11 @@ RUN apt update &&\
  winbind \
  netcat-openbsd
 
+
+
 RUN useradd -ms /bin/bash user &&\
  echo 'user:user' | chpasswd &&\
  passwd -l root
-COPY --chown=user:user sshd.sh /home/user/.ssh/
-
 WORKDIR /home/user
 
 RUN su -c ' \
@@ -25,6 +25,7 @@ RUN su -c ' \
  steamcmd/steamcmd.sh +quit \
  ' user
 
+COPY --chown=user:user sshd.sh /home/user/.ssh/
 RUN mkdir /tmp/.X11-unix && chmod 1777 /tmp/.X11-unix
 COPY --chown=user:user ["entrypoint.sh","tel.sh","conf.yaml","./"]
 

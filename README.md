@@ -3,6 +3,15 @@
 
 # Build the container
 - `./build.sh && ./run.sh`
+- run.sh will start the ssh server and pull the user key (./user) and certificate (user-cert.pub)
+- empyrion:/home/user/.ssh/user.pub may be overwritten for additional security with the following
+```
+ssh-keygen -t ecdsa -N '' -f user
+docker cp user.pub empyrion:/home/user/.ssh/
+docker exec -t empyrion ssh-keygen -s .ssh/ca -I 'user' -n user .ssh/user.pub
+docker cp empyrion:/home/user/.ssh/user-cert.pub .
+```
+- keep ./user and ./user-cert.pub
 
 # Run entrypoint.sh in the cointainer
 - `docker exec -d ./entrypoint.sh`
@@ -12,5 +21,5 @@
 - EGS indicates Steam can see the server. A blank response means it cannot.
 
 ## Access the telnet console
-- SSH into the container with `ssh user@<IP_ADDR> 30004`
+- SSH into the container with `ssh -i user -p 30004 user@<IP_ADDR>`
 - Run `./tel.sh`

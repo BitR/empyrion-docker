@@ -7,4 +7,7 @@ docker run -d \
  --name empyrion empyrion \
  sh -c 'tail -f /dev/null'
 
-docker exec -d .ssh/sshd.sh
+docker exec -d empyrion .ssh/sshd.sh
+sleep 1
+docker cp empyrion:/home/user/.ssh/user .
+docker cp empyrion:/home/user/.ssh/user-cert.pub .

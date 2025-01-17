@@ -8,6 +8,8 @@ docker run -d \
  sh -c 'tail -f /dev/null'
 
 docker exec -d empyrion .ssh/sshd.sh
-sleep 1
+while [ -z "$(docker exec -t empyrion ls .ssh | grep 'user-cert.pub')" ]; do
+ sleep 1
+done
 docker cp empyrion:/home/user/.ssh/user .
 docker cp empyrion:/home/user/.ssh/user-cert.pub .

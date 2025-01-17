@@ -4,6 +4,8 @@
 # Build the container
 - `./build.sh && ./run.sh`
 - run.sh will start the ssh server and pull the user key (./user) and certificate (user-cert.pub)
+
+#Additional security
 - empyrion:/home/user/.ssh/user.pub may be overwritten for additional security with the following
 ```
 ssh-keygen -t ecdsa -N '' -f user
@@ -12,6 +14,7 @@ docker exec -t empyrion ssh-keygen -s .ssh/ca -I 'user' -n user .ssh/user.pub
 docker cp empyrion:/home/user/.ssh/user-cert.pub .
 ```
 - keep ./user and ./user-cert.pub
+- if empyrion:/home/user/.ssh/user exists, you should delete it. `docker exec -t empyrion rm .ssh/user`
 
 # Run entrypoint.sh in the cointainer
 - `docker exec -d ./entrypoint.sh`

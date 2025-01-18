@@ -38,6 +38,6 @@ docker cp empyrion:/home/user/.ssh/user-cert.pub .
 
 # Access the telnet console
 - Get an internal shell
-	- Ssh into the container with `ssh -i user -p 30004 user@<IP_ADDR>`
-	- Invoke bash directly with `docker exec -ti <CONTAINER> bash`
+  - Ssh into the container with `ssh -i user -p 30004 user@<IP_ADDR>`
+  - Invoke bash directly with `docker exec -ti <CONTAINER> bash`
 - Run `./tel.sh`

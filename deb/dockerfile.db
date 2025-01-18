@@ -11,8 +11,6 @@ RUN apt update &&\
  winbind \
  netcat-openbsd
 
-
-
 RUN useradd -ms /bin/bash user &&\
  echo 'user:user' | chpasswd &&\
  passwd -l root
@@ -27,7 +25,7 @@ RUN su -c ' \
 
 COPY --chown=user:user sshd.sh /home/user/.ssh/
 RUN mkdir /tmp/.X11-unix && chmod 1777 /tmp/.X11-unix
-COPY --chown=user:user ["entrypoint.sh","tel.sh","conf.yaml","./"]
+COPY --chown=user:user ["entrypoint.sh","exitpoint.sh","tel.sh","conf.yaml","./"]
 
 RUN echo "empyrion built from debian:12.8-slim on $(date +%Y%m%d)" >> /info.txt
 USER user:user

@@ -14,9 +14,9 @@
 
 # Invoke sshd (optional)
 - sshinit.sh is a viable example of an sshd invocation.
-- it will attempt to run sshd and generate ssh keys and certs.
-- it will attempt to exfiltrate the user private key and signed public key from the container
-- it will attempt to delete the user private key in the container.
+- It will attempt to run sshd and generate ssh keys and certs.
+- It will attempt to exfiltrate the user private key and signed public key from the container
+- It will attempt to delete the user private key in the container.
 
 #Additional ssh security
 - empyrion:/home/user/.ssh/user.pub may be overwritten for additional security with the following
@@ -26,11 +26,11 @@ docker cp user.pub empyrion:/home/user/.ssh/
 docker exec -t empyrion ssh-keygen -s .ssh/ca -I 'user' -n user .ssh/user.pub
 docker cp empyrion:/home/user/.ssh/user-cert.pub .
 ```
-- keep ./user and ./user-cert.pub
-- if empyrion:/home/user/.ssh/user exists, you should delete it. `docker exec -t empyrion rm .ssh/user`
+- Keep ./user and ./user-cert.pub
+- If empyrion:/home/user/.ssh/user exists, you should delete it. `docker exec -t empyrion rm .ssh/user`
 
 # Run entrypoint.sh in the container
-- `docker exec -d ./entrypoint.sh`
+- `docker exec -d <CONTAINER> ./entrypoint.sh`
 
 # Verify operation via Steam
 - `curl -s https://api.steampowered.com/ISteamApps/GetServersAtAddress/v0001?addr=<IP_ADDR> | grep -o 'EGS'`

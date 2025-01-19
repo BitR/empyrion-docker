@@ -6,4 +6,4 @@ while [ -z "$(docker exec -t empyrion ls .ssh | grep 'user-cert.pub')" ]; do
 done
 docker cp empyrion:/home/user/.ssh/user .
 docker cp empyrion:/home/user/.ssh/user-cert.pub .
-docker exec -d rm .ssh/user
+docker exec -d empyrion rm .ssh/user

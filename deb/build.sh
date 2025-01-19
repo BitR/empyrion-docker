@@ -32,4 +32,8 @@ else
  sed 's:CONFUSE::' entrypoint.template > entrypoint.sh
 fi
 
-docker build -t empyrion -f dockerfile.db .
+chmod 755 entrypoint.sh
+chmod 644 dockerfile.db
+chmod 700 run.sh
+
+#docker build -t empyrion -f dockerfile.db .

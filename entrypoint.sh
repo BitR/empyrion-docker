@@ -22,4 +22,4 @@ cd "$GAMEDIR"
 sh -c 'until [ "`netstat -ntl | tail -n+3`" ]; do sleep 1; done
 sleep 5 # gotta wait for it to open a logfile
 tail -F Logs/current.log ../Logs/*/*.log 2>/dev/null' &
-/opt/wine-staging/bin/wine ./EmpyrionDedicated.exe -batchmode -nographics -logFile Logs/current.log "$@" &> Logs/wine.log
+/usr/lib/wine/wine64 ./EmpyrionDedicated.exe -batchmode -nographics -logFile Logs/current.log "$@" &> Logs/wine.log

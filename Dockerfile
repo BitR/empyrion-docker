@@ -10,7 +10,7 @@ RUN ln -s '/home/user/Steam/steamapps/common/Empyrion - Dedicated Server/' /serv
     useradd -m user
 
 USER user
-ENV HOME /home/user
+ENV HOME=/home/user
 WORKDIR /home/user
 
 RUN curl -sqL "https://steamcdn-a.akamaihd.net/client/installer/steamcmd_linux.tar.gz" | tar xz
